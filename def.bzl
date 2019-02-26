@@ -35,7 +35,7 @@ py_library(
 
     # Used by oauth2client
     http_archive(
-        name = "six",
+        name = "six_hacked",
         url = "https://pypi.python.org/packages/source/s/six/six-1.9.0.tar.gz",
         sha256 = "e24052411fc4fbd1f672635537c3fc2330d9481b18c0317695b46259512c91d5",
         strip_prefix = "six-1.9.0/",
@@ -55,6 +55,11 @@ py_library(
 )""",
     )
 
+    native.bind(
+        name = "six",
+        actual = "@six_hacked//:six",
+    )
+
     # Used for authentication in containerregistry
     http_archive(
         name = "oauth2client",
@@ -69,7 +74,7 @@ py_library(
    visibility = ["//visibility:public"],
    deps = [
      "@httplib2//:httplib2",
-     "@six//:six",
+     "//external:six",
    ]
 )""",
     )
